@@ -2,20 +2,20 @@
 
 .text
 main:
-call	read_number
-mv s0, a0
-call	read_number
-mv s1, a0
-readch
-mv a3, a0
-mv a1, s0
-mv a2, s1
-call hex_calc
-mv a1, a0
-printchi '\n'
-call print_number
-exit:
-exit a0
+		call	read_number
+		mv 	s0, a0
+		call	read_number
+		mv 	s1, a0
+		readch
+		mv 	a3, a0
+		mv 	a1, s0
+		mv 	a2, s1
+		call 	hex_calc
+		mv 	s2, a0
+		printchi '\n'
+		mv 	a0, s2
+		call 	print_number
+exit:		exit 	a0
 #--------
 read_number: #int read_number ()
 		#writes a number from the console to the a0 register
@@ -26,8 +26,8 @@ read_number: #int read_number ()
 		
 		li 	s0, 0
 		li 	s1, 8
-		li 	t0, 10
 while_rn:	readch
+		li 	t0, 10
 		mv 	a1, a0
 		beq 	a1, t0, end_rn
 		beqz	s1, error_rn_1
@@ -58,14 +58,14 @@ end_rn:		mv	a0, s0
  		ret
 error_rn_1: error "\nERROR: variable overflow", a0
 #--------
-print_number:#void print_number (int a1)
-		#outputs the number in a1 to the console
+print_number:#void print_number (int a0)
+		#outputs the number in a0 to the console
 		addi 	sp, sp, -12
 		sw	ra, 0(sp)
 		sw	s0, 4(sp)
 		sw	s1, 8(sp)
 		
-		mv 	s0, a1
+		mv 	s0, a0
 		li 	s1, 32
 do_while_pn:	beqz	s1, end_pn	
 		addi	s1,s1,-4 

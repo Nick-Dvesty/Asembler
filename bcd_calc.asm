@@ -1,4 +1,4 @@
-# ме гюбепь╗м
+# IN PROGRESS, NOT RWORK
 .include "mac_syscall.asm"
 
 .text
