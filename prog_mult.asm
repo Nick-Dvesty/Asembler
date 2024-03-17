@@ -1,0 +1,26 @@
+.include "mac_syscall.asm"
+.text
+main:
+call read_number
+mv s0, a0
+call read_number
+mv a1, s0
+call multiply
+call print_number
+exiti 0
+multiply:
+		li a2, 0
+		li t1, 1
+while:		beqz	a1, end_while
+		andi	t0, a1, 1
+		beqz	t0, general_m
+		add 	a2, a2, a0
+general_m:	srli	a1, a1, 1
+		slli 	a0, a0, 1
+		j while
+		
+end_while: mv a0, a2
+ret
+
+.include "fun_console_hex.asm"
+.include "fun_convert_number.asm"
