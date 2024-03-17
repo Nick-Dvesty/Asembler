@@ -35,3 +35,9 @@ la, a0, std
 syscall 4
 exit %r1
 .end_macro
+
+.macro swap %r1 %r2
+xor %r1, %r1, %r2
+xor %r2, %r1, %r2
+xor %r1, %r1, %r2
+.end_macro

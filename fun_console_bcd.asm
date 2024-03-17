@@ -11,16 +11,16 @@ read_number: #int read_number ()
 		li 	s1, 7
 		li 	s2, 0
 while_rn:	readch
-		mv 	a1, a0
+		mv 	a0, a0
 		li 	t0, 10
-		beq 	a1, t0, end_rn
+		beq 	a0, t0, end_rn
 		li 	t0, '-'
-		beq 	a1, t0, minus_rn
+		beq 	a0, t0, minus_rn
 		beqz	s1, error_rn_1
 
-		li 	a2, 0x30
-		li 	a3, 0x39
-		li 	a4, -0x30
+		li 	a1, 0x30
+		li 	a2, 0x39
+		li 	a3, -0x30
 		call	convert_number
 		slli	s0, s0, 4
 		add	s0, s0, a0
@@ -29,11 +29,10 @@ while_rn:	readch
 minus_rn:	li 	t0, 7
 		bne	s1, t0, error_rn_2
 		bnez	s2, error_rn_2
-		li 	s2, 1
+		li	s2, 0x80000000
 		j	while_rn
 		
-end_rn:		mv	a0, s0
-		mv	a1, s2
+end_rn:		add	a0, s0, s2
 		lw	ra, 0(sp)
 		lw	s0, 4(sp)
 		lw	s1, 8(sp)
@@ -46,13 +45,15 @@ error_rn_2: error "\nERROR: invalid value entered", a0
 #--------
 print_number:#void print_number (int a0, int a1)
 		#outputs the number in a0 to the console
-		addi 	sp, sp, -12
+		addi 	sp, sp, -16
 		sw	ra, 0(sp)
 		sw	s0, 4(sp)
 		sw	s1, 8(sp)
+		sw	s2, 12(sp)
 		
 		mv 	s0, a0
-		li 	s1, 32
+		srli	a1, a0, 28
+		li 	s1, 28
 		beqz	a1, do_while_pn
 		printchi '-'
 do_while_pn:	beqz	s1, end_pn	
@@ -69,5 +70,6 @@ general_pn:	call 	convert_number
 end_pn:		lw	ra, 0(sp)
 		lw	s0, 4(sp)
 		lw	s1, 8(sp)
-		addi	sp, sp, 12
+		lw	s2, 12(sp)
+		addi	sp, sp, 16
 		ret
