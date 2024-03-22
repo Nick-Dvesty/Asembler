@@ -1,0 +1,35 @@
+.include "mac_syscall.asm"
+.text
+main:
+#call read_decimal
+#mv s0, a0
+#call read_decimal
+#mv s1, a0
+#readch
+#mv a2, a0
+#printchi '\n'
+#mv a1, s1
+#mv a0, s0
+#call calc
+li a0, 123456
+call print_decimal
+exit a0
+
+calc:# int hex_calc(int a0, int a1, char a2)
+		#performs various operations on a0 and a1 depending on a2. The result is written to a0
+		srli 	t1, a0, 31 
+		srli 	t2, a1, 31
+		li 	t0, '+'
+		beq	a2, t0, calc_add
+		li 	t0, '-'
+		beq 	a2, t0, calc_sub
+		error "ERROR: This operation is not defined", a2
+calc_add:	add 	a0, a0, a1
+		srli	t3, a0, 31
+		bne 	t1, t2	rets
+		beq 	t3, t2	rets
+		error "ERROR: overflow", a0
+calc_sub:	sub 	a0, a0, a1
+
+rets:		ret
+.include "fun_console_dec.asm"

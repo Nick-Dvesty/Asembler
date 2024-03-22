@@ -105,9 +105,8 @@ for_ca:		beqz 	t0, for_end_ca
 		andi 	t4, t4, 15
 		add 	t5, t3, t4
 		add	t5, t5, t2
-		slti	t2, t5,10
-		not	t2, t2
-		andi	t2, t2, 1 
+		slti	t2, t5, 10
+		xor	t2, t2,	1 
 		beqz	t2, general_ca	
 		addi	t5, t5, -10	
 general_ca:	sll 	t5, t5, t1

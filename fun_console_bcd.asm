@@ -11,7 +11,6 @@ read_number: #int read_number ()
 		li 	s1, 7
 		li 	s2, 0
 while_rn:	readch
-		mv 	a0, a0
 		li 	t0, 10
 		beq 	a0, t0, end_rn
 		li 	t0, '-'
