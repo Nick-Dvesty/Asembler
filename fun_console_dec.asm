@@ -52,8 +52,7 @@ end_rd: 	mv 	a0, s1
 error_rd_1: error "ERROR: ", a0
 
 
-print_decimal:
-		addi sp, sp -16
+print_decimal:	addi 	sp, sp, -16
 		sw 	s0, 0(sp)
 		sw 	s1, 4(sp)
 		sw 	s2, 8(sp)

@@ -8,15 +8,17 @@ sw s1, 8(sp)
 mv s0, a0
 call division
 mv s1, a0
+li a1, 10
 call multiply
 ble a0, s0, general_ds
-addi s1, s1, 1 
+addi s1, s1, -1 
 general_ds: 	mv a0, s1
 lw ra, 0(sp)
 lw s0, 4(sp)
 lw s1, 8(sp)
 addi sp, sp, 12
 ret
+
 division:#(input: int a0, output: int a0, int a1)
 		addi sp, sp, -8
 		sw ra 0(sp)

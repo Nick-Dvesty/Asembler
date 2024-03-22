@@ -1,19 +1,18 @@
 .include "mac_syscall.asm"
 .text
 main:
-#call read_decimal
-#mv s0, a0
-#call read_decimal
-#mv s1, a0
-#readch
-#mv a2, a0
-#printchi '\n'
-#mv a1, s1
-#mv a0, s0
-#call calc
-li a0, 123456
+call read_decimal
+mv s0, a0
+call read_decimal
+mv s1, a0
+readch
+mv a2, a0
+printchi '\n'
+mv a1, s1
+mv a0, s0
+call calc
 call print_decimal
-exit a0
+exiti 666
 
 calc:# int hex_calc(int a0, int a1, char a2)
 		#performs various operations on a0 and a1 depending on a2. The result is written to a0
